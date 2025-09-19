@@ -10,9 +10,9 @@ import Link from "next/link"
 import { toast } from "sonner"
 import FormField from "./FormField"
 import { useRouter } from "next/navigation"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "@firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "@/firebase/client"
-import { signUp } from "@/lib/actions/auth.actions"
+import { signIn, signUp } from "@/lib/actions/auth.actions"
 
 
 const AuthFormSchema = (type: FormType) => {
@@ -71,7 +71,9 @@ const AuthForm = ({ type } : { type: FormType } ) => {
           return;
         }
 
-        else 
+        await signIn({
+          email, idToken
+        }) 
 
         toast.success('Signed in successfully.')
         router.push('/')
